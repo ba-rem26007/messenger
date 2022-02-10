@@ -35,6 +35,9 @@ LISTE DES MESSAGES
 COMMANDE : pour créer un user
 * php bin/console make:command
 
+ou
+* php bin/console security:hash-password 
+pour recupere le password salé
 -----
 
 USERS et SECURITE
@@ -62,7 +65,7 @@ utilisation de la clef dans le .env
 -------
 
 ## RESSOURCE
-## SYMFONY
+### SYMFONY
 * https://symfony.com/download
 * https://symfony.com/doc/current/doctrine.html#configuring-the-database
 * https://symfony.com/doc/5.4/page_creation.html
@@ -70,5 +73,71 @@ utilisation de la clef dans le .env
 * https://symfony.com/doc/current/setup/symfony_server.html
 * https://symfony.com/doc/current/security.html
 
+
+###AUTRE
+Notifier: https://symfony.com/doc/current/notifier.html
+API: https://sylius.com/blog/api-for-a-modern-symfony-application/ (api platform et FOSRestBundle)
+
+
 ### DDEV : 
 * https://ddev.com/
+
+
+# Installation 
+
+(j'ai volontairemnt pas mis de librairies locales pour yarn et encore pour le moment)
+Il suffit de lancer le processus d'installation en tapant:
+
+* test avec make install et DDEV en cours
+* composer install
+* composer require encore // si un soucis avec le yarn build ci-dessous
+* bin/console doctrine:migrations:migrate
+* npm install
+* yarn build
+
+
+## API EN COURS 
+
+
+## JWT
+
+```
+curl --location --request POST 'http://symfony5.ddev.site/api/login' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "username":"admin",
+    "password":"admin"
+}'
+```
+
+## GET ALL MESSAGES
+
+```
+curl --location --request GET 'https://symfony5.ddev.site/api/messages' \
+--header 'Authorization: Bearer **TOKEN_JWT**'
+```
+
+
+
+## CREATE MESSAGE
+
+```
+curl --location --request POST 'https://symfony5.ddev.site/api/messages' \
+--header 'accept: application/ld+json' \
+--header 'Content-Type: application/ld+json' \
+--header 'Authorization: Bearer **TOKEN_JWT**' \
+--data-raw '{
+  "title": "essai",
+  "body": "essai via curl",
+  "status": false,
+  "choice": "email",
+  "emissionDate": "2022-01-17T18:31:47.170Z"
+}'
+```
+
+
+## QUALITY CODE
+# GrumpPHP (phpstan, phpmd)
+
+https://github.com/sci3ma/symfony-grumphp
+
