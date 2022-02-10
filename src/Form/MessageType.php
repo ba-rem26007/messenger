@@ -22,7 +22,12 @@ class MessageType extends AbstractType
             ])
             ->add('Status')
             ->add('SendingDate')
-            ->add('Choice')
+            ->add('Choice', ChoiceType::class, [
+                'label' => 'Type:',
+                'choices' => Message::CHOICES,
+                //'expanded' => true,
+                //'mapped' => false
+            ]);
         ;
     }
 

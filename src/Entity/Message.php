@@ -10,6 +10,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Message
 {
+    const CHOICES = [
+        'Slack' => 'slack',
+        'Email' => 'email',
+    ];
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -33,7 +37,7 @@ class Message
     private $EmissionDate;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default": 0})
      */
     private $Status;
 
