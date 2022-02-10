@@ -20,8 +20,8 @@ class MessageType extends AbstractType
                 'widget' => 'single_text',
                 //'html5' => false,
             ])
-            ->add('Status')
-            ->add('SendingDate')
+            //->add('Status')
+            //->add('SendingDate')
             ->add('Choice', ChoiceType::class, [
                 'label' => 'Type:',
                 'choices' => Message::CHOICES,
