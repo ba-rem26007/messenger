@@ -67,50 +67,16 @@ Does this app need to hash/check user passwords? (yes/no) [yes]:
    - Use make:entity to add more fields to your User entity and then run make:migration.
 
 
-php bin/console make:user
-
- The name of the security user class (e.g. User) [User]:
- Do you want to store user data in the database (via Doctrine)? (yes/no) [yes]:
- Enter a property name that will be the unique "display" name for the user (e.g. email, username, uuid) [email]:
- Will this app need to hash/check user passwords? Choose No if passwords are not needed or will be checked/hashed by some other system (e.g. a single sign-on server).
- Does this app need to hash/check user passwords? (yes/no) [yes]:
-
+* php bin/console make:user
 * php bin/console make:entity
-
- Class name of the entity to create or update (e.g. DeliciousPopsicle):
- > User
-
- Your entity already exists! So let's add some new fields!
-
- nom
- Field type (enter ? to see all types) [string]:
- Field length [255]:
- Can this field be null in the database (nullable) (yes/no) [no]:
-
- prenom
- Field type (enter ? to see all types) [string]:
- Field length [255]:
- Can this field be null in the database (nullable) (yes/no) [no]:
 
 * php bin/console make:migration
 * php bin/console doctrine:migration:migrate
 
-
-
 * php bin/console make:auth
 
- What style of authentication do you want?
- [Empty authenticator]:  [1] Login form authenticator
- The class name of the authenticator to create (e.g. AppCustomAuthenticator): LoginAuthenticator
- Choose a name for the controller class (e.g. SecurityController) [SecurityController]:
- Do you want to generate a '/logout' URL? (yes/no) [yes]:
-
- Next:
- - Customize your new authenticator.
- - Finish the redirect "TODO" in the App\Security\LoginAuthenticator::onAuthenticationSuccess() method.
- - Check the user's password in App\Security\LoginAuthenticator::checkCredentials().
- - Review & adapt the login template: templates/security/login.html.twig.
-
+----
+on cree une commande : 
 
 * php bin/console user:create
 
