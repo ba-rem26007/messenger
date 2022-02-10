@@ -35,13 +35,23 @@ class MessageController extends AbstractController
         $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($message);
-            $entityManager->flush();
+        $errors = $form->getErrors();
 
-            return $this->redirectToRoute('message_index', [], Response::HTTP_SEE_OTHER);
+        try {
+	        if ($form->isSubmitted() && $form->isValid()) {
+	            $entityManager->persist($message);
+	            $entityManager->flush();
+
+
+		    //$this->addFlash('success', 'Message sauvé.');
+		    
+	            return $this->redirectToRoute('message_index', [], Response::HTTP_SEE_OTHER);
+	    }
+	} catch (\Exception $e) {
+            $this->addFlash('danger', 'Message cannot be saved.');
+
+            throw $e;
         }
-
         return $this->renderForm('message/new.html.twig', [
             'message' => $message,
             'form' => $form,

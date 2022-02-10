@@ -94,6 +94,7 @@ class Message
 
     public function getStatus(): ?bool
     {
+        //if($this->Status=="")$this->Status=0;
         return $this->Status;
     }
 
