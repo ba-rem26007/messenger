@@ -1,4 +1,5 @@
-# Creation du projet 
+# Creation du projet pas à pas 
+
 create project : symfony new -webapp "symfony-start"
 
 ## Composer v2 :
@@ -88,7 +89,8 @@ API: https://sylius.com/blog/api-for-a-modern-symfony-application/ (api platform
 (j'ai volontairemnt pas mis de librairies locales pour yarn et encore pour le moment)
 Il suffit de lancer le processus d'installation en tapant:
 
-* test avec make install et DDEV en cours
+* test avec make install et *DDEV en cours*
+* 
 * composer install
 * composer require encore // si un soucis avec le yarn build ci-dessous
 * bin/console doctrine:migrations:migrate
@@ -99,7 +101,7 @@ Il suffit de lancer le processus d'installation en tapant:
 ## API EN COURS 
 
 
-## JWT
+## JWT via DDEV
 
 ```
 curl --location --request POST 'http://symfony5.ddev.site/api/login' \
@@ -110,16 +112,14 @@ curl --location --request POST 'http://symfony5.ddev.site/api/login' \
 }'
 ```
 
-## GET ALL MESSAGES
+## GET ALL MESSAGES via DDEV
 
 ```
 curl --location --request GET 'https://symfony5.ddev.site/api/messages' \
 --header 'Authorization: Bearer **TOKEN_JWT**'
 ```
 
-
-
-## CREATE MESSAGE
+## CREATE MESSAGE via DDEV
 
 ```
 curl --location --request POST 'https://symfony5.ddev.site/api/messages' \
