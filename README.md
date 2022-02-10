@@ -61,12 +61,13 @@ Ajout des services : config\services.yaml
 * composer require symfony/slack-notifier
 utilisation de la clef dans le .env
 
+-------
 
-RESSOURCES
-https://symfony.com/doc/current/doctrine.html#configuring-the-database
-https://symfony.com/doc/5.4/page_creation.html
-https://symfony.com/doc/5.4/index.html
-https://symfony.com/doc/current/setup/symfony_server.html
-https://symfony.com/doc/current/security.html
+## RESSOURCES
+* https://symfony.com/doc/current/doctrine.html#configuring-the-database
+* https://symfony.com/doc/5.4/page_creation.html
+* https://symfony.com/doc/5.4/index.html
+* https://symfony.com/doc/current/setup/symfony_server.html
+* https://symfony.com/doc/current/security.html
 
 
