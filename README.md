@@ -57,6 +57,12 @@ CREATION DES ENTITES :
  Next: When you're ready, create a migration with php bin/console make:migration
 
 
+php bin/console make:controller
+Choose a name for your controller class (e.g. GrumpyElephantController): MessageController
+
+
+
+
 
 BDD :
 
