@@ -19,9 +19,10 @@
         {% for message in messages %}
             <tr>
                 <td>{{ message.id }}</td>
-                <td>{{ message.titre }}</td>
-                <td>{{ message.canal }}</td>
-                <td>{{ message.sentAt ? message.sentAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ message.title }}</td>
+                <td>{{ message.choice }}</td>
+            {{ dump(message) }}
+                <td>{{ message.EmissionDate ? message.EmissionDate|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('message_show', {'id': message.id}) }}">show</a>
                     <a href="{{ path('message_edit', {'id': message.id}) }}">edit</a>
