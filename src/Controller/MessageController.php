@@ -4,11 +4,18 @@ namespace App\Controller;
 
 use App\Entity\Message;
 use App\Form\MessageType;
-use App\Repository\MessageRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use DateTime;
+use Doctrine\Persistence\ManagerRegistry;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Notifier\ChatterInterface;
+use Symfony\Component\Notifier\Message\ChatMessage;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -43,7 +50,7 @@ class MessageController extends AbstractController
 	            $entityManager->flush();
 
 
-		    //$this->addFlash('success', 'Message sauvé.');
+		        $this->addFlash('success', 'Message sauvÃ©.');
 		    
 	            return $this->redirectToRoute('message_index', [], Response::HTTP_SEE_OTHER);
 	    }
@@ -100,4 +107,68 @@ class MessageController extends AbstractController
 
         return $this->redirectToRoute('message_index', [], Response::HTTP_SEE_OTHER);
     }
+    
+    /**
+     * @Route("/cron/go", name="message_cron", methods={"GET", "POST"})
+     */
+    public function cron(
+                    ManagerRegistry $doctrine, 
+    				LoggerInterface $logger,
+				    ChatterInterface $chatter,
+				    MailerInterface $mailer
+                ): 
+				JsonResponse
+    {
+        $a = '';
+        $em = $doctrine->getManager();
+	
+	
+        $messages = $em->getRepository(Message::class)->findBy(
+            ['Status' => 0],
+        );
+
+        $now = new DateTime();
+
+        $json = [];
+
+        foreach ($messages as $message) {
+            if ($now >= $message->getEmissionDate()) {
+                $json[] = ['id' => $message->getId()];
+                $message->setSendingDate(new \DateTime('now'));
+
+                switch ($message->getChoice()) {
+                    case 'slack':
+                            $messageSlack = (new ChatMessage($message->getTitle().' - '.$message->getBody()))
+                                ->transport('slack');
+                            $sentMessage = $chatter->send($messageSlack);
+                            $message->setStatus(true);
+                        break;
+                    case 'email':
+                            $email = (new Email())
+                                ->from('symfony5@ddev.site')
+                                ->to('no-reply@ddev.site')
+                                ->subject($message->getTitre())
+                                ->text($message->getBody())
+                                ->html($message->getBody());
+                            $mailer->send($email);
+                            $message->setStatus(true);
+                        break;
+                    default:
+                        break;
+                }
+
+                $em->persist($message);
+                $em->flush();
+            }
+        }
+
+        $response = new JsonResponse();
+
+        $response->setData($json);
+	
+        return $response;
+
+    }
+
+
 }

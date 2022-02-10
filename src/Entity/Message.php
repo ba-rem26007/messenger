@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\MessageRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource
  * @ORM\Entity(repositoryClass=MessageRepository::class)
  */
 class Message
@@ -14,6 +16,7 @@ class Message
         'Slack' => 'slack',
         'Email' => 'email',
     ];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -94,7 +97,6 @@ class Message
 
     public function getStatus(): ?bool
     {
-        //if($this->Status=="")$this->Status=0;
         return $this->Status;
     }
 
