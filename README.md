@@ -60,10 +60,18 @@ CREATION DES ENTITES :
 
 BDD :
 
-php bin/console make:migration
-php bin/console doctrine:migration:migrate
+* php bin/console make:migration
+* php bin/console doctrine:migration:migrate
 
-OBJETS :
+
+
+
+
+COMMANDE :
+* php bin/console make:command
+
+
+
 
 
 
