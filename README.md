@@ -14,9 +14,52 @@ Création de la base de données et du user
 Modification du .env
 
 
+VERIF : 
+php bin/console list
+php bin/console doctrine:migration:status
+
+
+CREATION DES ENTITES :
+
+ Class name of the entity to create or update (e.g. BravePuppy):
+ > Message  
+
+ created: src/Entity/Message.php
+ created: src/Repository/MessageRepository.php
+ 
+ New property name (press <return> to stop adding fields): Title
+ Field type (enter ? to see all types) [string]:
+ Field length [255]:
+ Can this field be null in the database (nullable) (yes/no) [no]:
+
+ Add another property? Enter the property name (or press <return> to stop adding fields): Body
+ Field type (enter ? to see all types) [string]: text
+ Can this field be null in the database (nullable) (yes/no) [no]:
+
+ Add another property? Enter the property name (or press <return> to stop adding fields): EmissionDate
+ Field type (enter ? to see all types) [string]: datetime
+ Can this field be null in the database (nullable) (yes/no) [no]: yes
+
+ Add another property? Enter the property name (or press <return> to stop adding fields): Status
+ Field type (enter ? to see all types) [string]: boolean
+ Can this field be null in the database (nullable) (yes/no) [no]:
+
+ Add another property? Enter the property name (or press <return> to stop adding fields): SendingDate
+ Field type (enter ? to see all types) [string] : datetime
+ Can this field be null in the database (nullable) (yes/no) [no]: yes
+ 
+ Add another property? Enter the property name (or press <return> to stop adding fields): Choice
+ Field type (enter ? to see all types) [string]:
+ Field length [255]:
+ Can this field be null in the database (nullable) (yes/no) [no]:
+
+ updated: src/Entity/Message.php
+ Next: When you're ready, create a migration with php bin/console make:migration
+
+
+
 BDD :
 
-php bin/console doctrine:database:create
 php bin/console make:migration
 php bin/console doctrine:migration:migrate
 
