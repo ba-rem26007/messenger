@@ -1,9 +1,7 @@
-#prerequis: symfony https://symfony.com/download
-
-#creation du projet 
+# Creation du projet 
 create project : symfony new -webapp "symfony-start"
 
-#composer v2 :
+## Composer v2 :
 composer require symfony/webpack-encore-bundle
 composer require symfony/doctrine-messenger
 composer require symfony/browser-kit
@@ -11,7 +9,7 @@ composer require symfony/orm-pack
 composer require symfony/maker-bundle --dev
 
 Création de la base de données et du user
-Modification du .env
+Modification du .env (.env.exemple pour s'inspirer)
 
 -----
 VERIF : 
@@ -63,11 +61,14 @@ utilisation de la clef dans le .env
 
 -------
 
-## RESSOURCES
+## RESSOURCE
+## SYMFONY
+* https://symfony.com/download
 * https://symfony.com/doc/current/doctrine.html#configuring-the-database
 * https://symfony.com/doc/5.4/page_creation.html
 * https://symfony.com/doc/5.4/index.html
 * https://symfony.com/doc/current/setup/symfony_server.html
 * https://symfony.com/doc/current/security.html
 
-
+### DDEV : 
+* https://ddev.com/
