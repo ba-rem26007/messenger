@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Message index{% endblock %}
+{% block title %}Liste des Messages{% endblock %}
 
 {% block body %}
-    <h1>Message index</h1>
+    <h1>Liste des Messages</h1>
 
     <table class="table">
         <thead>
@@ -21,20 +21,20 @@
                 <td>{{ message.id }}</td>
                 <td>{{ message.title }}</td>
                 <td>{{ message.choice }}</td>
-            {{ dump(message) }}
+                         {{ dump(message) }}
                 <td>{{ message.EmissionDate ? message.EmissionDate|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('message_show', {'id': message.id}) }}">show</a>
-                    <a href="{{ path('message_edit', {'id': message.id}) }}">edit</a>
+                    <a href="{{ path('message_show', {'id': message.id}) }}">{{ "Voir"|button('primary') }}</a>
+                    <a href="{{ path('message_edit', {'id': message.id}) }}">{{ "Editer"|button('warning') }}</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="5">pas de message en base de données</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('message_new') }}">Create new</a>
+    <a href="{{ path('message_new') }}">{{ "Créer"|button("success") }}</a>
 {% endblock %}

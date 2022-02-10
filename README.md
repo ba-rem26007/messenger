@@ -70,8 +70,8 @@ BDD :
 * php bin/console doctrine:migration:migrate
 
 
-
-
+LISTE DES MESSAGES
+* php bin/console doctrine:query:sql 'SELECT * FROM message'
 
 COMMANDE :
 * php bin/console make:command
