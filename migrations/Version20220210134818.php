@@ -25,10 +25,10 @@ final class Version20220210134818 extends AbstractMigration
 		
 		$this->addSql(
             '
-            INSERT INTO `user` (`username`, `roles`, `password`,`nom`,`prenom`)
+            INSERT INTO `user` (`email`, `roles`, `password`,`nom`,`prenom`)
             VALUES
                 (\'admin@fr.fr\', \'["ROLE_ADMIN"]\', \'$2y$13$fNk/atKuVqQVi.oIlEKbEeCxgiQseRih64zmQ9IBRerssLRlogN1m\',
-				'admin' , 'admin');
+				\'admin\' , \'admin\');
             '
         );
 		
