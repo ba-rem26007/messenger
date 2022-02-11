@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Message;
 use App\Form\MessageType;
+use App\Repository\MessageRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use Psr\Log\LoggerInterface;
@@ -48,7 +50,6 @@ class MessageController extends AbstractController
 	        if ($form->isSubmitted() && $form->isValid()) {
 	            $entityManager->persist($message);
 	            $entityManager->flush();
-
 
 		        $this->addFlash('success', 'Message sauvé.');
 		    

@@ -1,8 +1,16 @@
 # INSTALLATION
 
+## Environnement
+* powershell
+* docker
+* 
+
+## API clask
 * https://api.slack.com/apps
 => 	Access Token : xoxp tocken
 exemple : xoxe.xoxp-1-XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
 
 ### .env
 copier le .env.exemple
@@ -13,10 +21,26 @@ LOCAL: "mysql://messenger:messenger@127.0.0.1:3306/messenger?serverVersion=maria
 DDEV : "mysql://db:db@db:3306/db?serverVersion=mariadb-10.3.31"
 
 
-
 ### ddev start
 started symfony5
 Project can be reached at https://symfony5.ddev.site https://127.0.0.1:51938
+
+
+### Initialisation (and take a coffee)
+* make sous windows https://sourceforge.net/projects/gnuwin32/
+make install
+ou (si vous n'avez pas make ...)
+* ddev composer install
+* ddev exec 'npm install'
+* ddev exec 'yarn build'
+* ddev exec 'php bin/console doctrine:migrations:migrate --no-interaction'
+
+### user
+un user existe deja : admin@fr.fr / pass : admin crée dans les migrations
+sinon pour créer un user :
+* ddev exec 'php bin/console user:create'
+
+
 
 ### ddev status
 services
