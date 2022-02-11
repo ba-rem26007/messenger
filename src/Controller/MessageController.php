@@ -48,6 +48,7 @@ class MessageController extends AbstractController
 
         try {
 	        if ($form->isSubmitted() && $form->isValid()) {
+                $message->Status=0;
 	            $entityManager->persist($message);
 	            $entityManager->flush();
 

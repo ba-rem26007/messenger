@@ -96,7 +96,7 @@ class Message
     }
 
     public function getStatus(): ?bool
-    {
+    {   
         return $this->Status;
     }
 
