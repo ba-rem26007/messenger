@@ -40,7 +40,7 @@ class Message
     private $EmissionDate;
 
     /**
-     * @ORM\Column(type="boolean", options={"default": 0})
+     * @ORM\Column(type="boolean", nullable=true, options={"default": 0})
      */
     private $Status;
 
