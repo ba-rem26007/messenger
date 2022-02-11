@@ -1,3 +1,34 @@
+# INSTALLATION
+
+* https://api.slack.com/apps
+=> 	Access Token : xoxp tocken
+exemple : xoxe.xoxp-1-XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+### .env
+copier le .env.exemple
+mettre le token :
+
+modifier le DATABASE_URL
+LOCAL: "mysql://messenger:messenger@127.0.0.1:3306/messenger?serverVersion=mariadb-10.4.19"
+DDEV : "mysql://db:db@db:3306/db?serverVersion=mariadb-10.3.31"
+
+
+
+### ddev start
+started symfony5
+Project can be reached at https://symfony5.ddev.site https://127.0.0.1:51938
+
+### ddev status
+services
+* MailHog (https):        https://symfony5.ddev.site:8026
+* MailHog:                http://symfony5.ddev.site:8025
+* phpMyAdmin (https):     https://symfony5.ddev.site:8037
+* phpMyAdmin:             http://symfony5.ddev.site:8036
+
+
+
+
+
 # Creation du projet pas à pas 
 
 create project : symfony new -webapp "symfony-start"
