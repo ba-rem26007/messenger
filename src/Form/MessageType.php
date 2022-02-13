@@ -21,6 +21,7 @@ class MessageType extends AbstractType
             ->add('Body', TextareaType::class, ['label' => 'Contenu du message :'])
             ->add('EmissionDate', DateTimeType::class, [
                 'widget' => 'single_text',
+                'label' => 'Date et heure d\'envoi :',
                 'data' => new \DateTime("now")
                 //'html5' => false,
             ])

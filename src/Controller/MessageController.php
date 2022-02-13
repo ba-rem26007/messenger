@@ -115,9 +115,8 @@ class MessageController extends AbstractController
      * @Route("/cron/go", name="message_cron", methods={"GET", "POST"})
      */
     public function cron(
-		    MessageRepository $messageRepository,
+		            MessageRepository $messageRepository,
                     ManagerRegistry $doctrine, 
-    				LoggerInterface $logger,
 				    ChatterInterface $chatter,
 				    MailerInterface $mailer
                 ): 
@@ -140,17 +139,14 @@ class MessageController extends AbstractController
                 $json[] = ['id' => $message->getId()];
                 $message->setSendingDate(new \DateTime('now'));
 
-                //dump($message->getChoice());
-
-		        $this->addFlash('success', 'Message send '.$message->getChoice());
+		        // $this->addFlash('success', 'Message send '.$message->getChoice());
 
                 switch ($message->getChoice()) {
                     case 'slack':
                             //$options = (new SlackOptions());
                             $messageSlack = (new ChatMessage($message->getTitle() .' - '. $message->getBody()  )  )
-                                            ->subject('test'.date('Ymd his'))
                                             ->transport('slack');
-                            $recap .= $message->getTitle() .' - '. $message->getBody();
+                            $recap .= "Slack : ".$message->getTitle() .' - '. $message->getBody();
                             //Add the custom options to the chat message and send the message
                             //$chatter->options($options);
                             $sentMessage = $chatter->send($messageSlack);
@@ -167,6 +163,8 @@ class MessageController extends AbstractController
                                 ->html($message->getBody());
                             $mailer->send($email);
                             $message->setStatus(true);
+
+                            $recap .= "Mail : ".$message->getTitle() .' - '. $message->getBody();
                         break;
                     default:
                         break;
@@ -186,6 +184,7 @@ class MessageController extends AbstractController
         //exit();
         //$response = new JsonResponse();
 
+        //$command->execute($input,$output);
         //$response->setData($json);
 	
         //return $response;

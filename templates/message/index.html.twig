@@ -20,13 +20,13 @@
                 <th>Id</th>
                 <th>Titre</th>
                 <th>Canal</th>
-                <th>SentAt</th>
+                <th>Date d'émission</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for message in messages %}
-            <tr>
+            <tr class="{% if message.status==1 %}table-success{% else %}table-warning{% endif %}">
                 <td>{{ message.id }}</td>
                 <td>{{ message.title }}</td>
                 <td>{{ message.choice }}</td>

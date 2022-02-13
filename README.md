@@ -59,8 +59,8 @@ pour voir "The following messages can be dispatched"
 # cron pour envoyer les messages
 * php bin/console messenger:consume async
 * ~ ddev exec 'php bin/console messenger:consume async'
-or 
-* php bin/console messenger:consume
+ou mode debug :
+* php bin/console messenger:consume -vv
 
 
 
@@ -122,8 +122,7 @@ on cree une commande :
 
 * php bin/console user:create
 
-
-Ajout d'une API : 
+Ajout des composants pour une API : 
 * composer require api-platform/core
 
 Ajout des services : config\services.yaml
@@ -143,6 +142,8 @@ utilisation de la clef dans le .env
 
 
 ###AUTRE
+
+
 Notifier: https://symfony.com/doc/current/notifier.html
 API: https://sylius.com/blog/api-for-a-modern-symfony-application/ (api platform et FOSRestBundle)
 
