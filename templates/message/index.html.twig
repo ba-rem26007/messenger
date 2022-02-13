@@ -3,6 +3,15 @@
 {% block title %}Liste des Messages{% endblock %}
 
 {% block body %}
+
+    {% if recap is defined and recap != "" %}
+    <p>
+        <div class="alert alert-dismissible alert-success">
+            {{ recap|raw }}
+        </div>
+    </p>
+    {% endif %}
+    
     <h1>Liste des Messages</h1>
 
     <table class="table">
@@ -21,7 +30,6 @@
                 <td>{{ message.id }}</td>
                 <td>{{ message.title }}</td>
                 <td>{{ message.choice }}</td>
-                         {{ dump(message) }}
                 <td>{{ message.EmissionDate ? message.EmissionDate|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('message_show', {'id': message.id}) }}">{{ "Voir"|button('primary') }}</a>
