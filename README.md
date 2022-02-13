@@ -56,6 +56,18 @@ services
 
 
 
+# DEBUG MESSENGER SYMFONY QUEUE
+pour voir "The following messages can be dispatched"
+* php bin/console debug:messenger
+
+
+# cron pour envoyer les messages
+* php bin/console messenger:consume async
+* ~ ddev exec 'php bin/console messenger:consume async'
+or 
+* php bin/console messenger:consume
+
+
 
 
 # Creation du projet pas à pas 

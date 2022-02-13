@@ -19,6 +19,7 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\Notifier\ChatterInterface;
 use Symfony\Component\Notifier\Message\ChatMessage;
 use Symfony\Component\Routing\Annotation\Route;
+//use Symfony\Component\Notifier\Bridge\Slack\SlackOptions;
 
 /**
  * @Route("/message")
@@ -48,6 +49,7 @@ class MessageController extends AbstractController
 
         try {
 	        if ($form->isSubmitted() && $form->isValid()) {
+                $message->setStatus(0);
 	            $entityManager->persist($message);
 	            $entityManager->flush();
 
@@ -113,16 +115,16 @@ class MessageController extends AbstractController
      * @Route("/cron/go", name="message_cron", methods={"GET", "POST"})
      */
     public function cron(
+		    MessageRepository $messageRepository,
                     ManagerRegistry $doctrine, 
     				LoggerInterface $logger,
 				    ChatterInterface $chatter,
 				    MailerInterface $mailer
                 ): 
-				JsonResponse
+				Response
     {
         $a = '';
         $em = $doctrine->getManager();
-	
 	
         $messages = $em->getRepository(Message::class)->findBy(
             ['Status' => 0],
@@ -131,19 +133,31 @@ class MessageController extends AbstractController
         $now = new DateTime();
 
         $json = [];
-
+        $recap = "";
         foreach ($messages as $message) {
             if ($now >= $message->getEmissionDate()) {
+
                 $json[] = ['id' => $message->getId()];
                 $message->setSendingDate(new \DateTime('now'));
 
+                //dump($message->getChoice());
+
+		        $this->addFlash('success', 'Message send '.$message->getChoice());
+
                 switch ($message->getChoice()) {
                     case 'slack':
-                            $messageSlack = (new ChatMessage($message->getTitle().' - '.$message->getBody()))
-                                ->transport('slack');
+                            //$options = (new SlackOptions());
+                            $messageSlack = (new ChatMessage($message->getTitle() .' - '. $message->getBody()  )  )
+                                            ->subject('test'.date('Ymd his'))
+                                            ->transport('slack');
+                            $recap .= $message->getTitle() .' - '. $message->getBody();
+                            //Add the custom options to the chat message and send the message
+                            //$chatter->options($options);
                             $sentMessage = $chatter->send($messageSlack);
-                            $message->setStatus(true);
-                        break;
+                            if($sentMessage!==FALSE){
+                                $message->setStatus(true);
+                            }
+                            break;
                     case 'email':
                             $email = (new Email())
                                 ->from('symfony5@ddev.site')
@@ -163,12 +177,22 @@ class MessageController extends AbstractController
             }
         }
 
-        $response = new JsonResponse();
+        if($recap ==""){
+            $recap = "<h4>Pas de messages à envoyer!</h4>";
+        }
+        else{
+            $recap = "<h3>Messages mis dans la file d'attente</h3>".$recap;
+        }
+        //exit();
+        //$response = new JsonResponse();
 
-        $response->setData($json);
+        //$response->setData($json);
 	
-        return $response;
-
+        //return $response;
+	    return $this->render('message/index.html.twig', [
+            'messages' => $messageRepository->findAll(),
+            'recap' => $recap
+        ]);
     }
 
 
