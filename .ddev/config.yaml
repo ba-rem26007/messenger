@@ -198,5 +198,6 @@ hooks:
     - exec: "curl -sS https://get.symfony.com/cli/installer | bash"
     - exec: "mv /home/fournier/.symfony/bin/symfony /usr/local/bin/symfony"
     - exec: "sudo apt-get update && sudo apt-get install cron -y"
-    - exec: "echo '* * * * *  /usr/bin/curl http://symfony5.ddev.site/cron' | sudo tee -a /etc/cron.d/symfony5"
+    - exec: "echo '* * * * *  /usr/bin/curl http://symfony5.ddev.site/message/cron/go' | sudo tee -a /etc/cron.d/symfony5"
     - exec: "sudo chmod 0644 /etc/cron.d/symfony5 && sudo service cron start && crontab /etc/cron.d/symfony5"
+    - exec: "sudo apt-get install lynx -y"
