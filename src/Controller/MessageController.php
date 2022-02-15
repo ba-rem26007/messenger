@@ -2,11 +2,11 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\Message;
 use App\Form\MessageType;
 use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,6 +19,7 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\Notifier\ChatterInterface;
 use Symfony\Component\Notifier\Message\ChatMessage;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 //use Symfony\Component\Notifier\Bridge\Slack\SlackOptions;
 
 /**
@@ -119,6 +120,7 @@ class MessageController extends AbstractController
                     ManagerRegistry $doctrine, 
 				    ChatterInterface $chatter,
 				    MailerInterface $mailer
+                    //Security $security
                 ): 
 				Response
     {
@@ -138,7 +140,6 @@ class MessageController extends AbstractController
 
                 $json[] = ['id' => $message->getId()];
                 $message->setSendingDate(new \DateTime('now'));
-
 		        // $this->addFlash('success', 'Message send '.$message->getChoice());
 
                 switch ($message->getChoice()) {
@@ -146,7 +147,7 @@ class MessageController extends AbstractController
                             //$options = (new SlackOptions());
                             $messageSlack = (new ChatMessage($message->getTitle() .' - '. $message->getBody()  )  )
                                             ->transport('slack');
-                            $recap .= "Slack : ".$message->getTitle() .' - '. $message->getBody();
+                            $recap .= "<li>Slack : ".$message->getTitle() .' - '. $message->getBody()."</li>";
                             //Add the custom options to the chat message and send the message
                             //$chatter->options($options);
                             $sentMessage = $chatter->send($messageSlack);
@@ -164,7 +165,7 @@ class MessageController extends AbstractController
                             $mailer->send($email);
                             $message->setStatus(true);
 
-                            $recap .= "Mail : ".$message->getTitle() .' - '. $message->getBody();
+                            $recap .= "<li>Mail : ".$message->getTitle() .' - '. $message->getBody()."</li>";
                         break;
                     default:
                         break;
@@ -176,19 +177,19 @@ class MessageController extends AbstractController
         }
 
         if($recap ==""){
-            $recap = "<h4>Pas de messages à envoyer!</h4>";
+            $recap = "<h4>Pas de message à envoyer!</h4>";
         }
         else{
-            $recap = "<h3>Messages mis dans la file d'attente</h3>".$recap;
+            $recap = "<h3>Messages mis dans la file d'attente</h3><ul>".$recap."</ul>";
         }
-        //exit();
+
         //$response = new JsonResponse();
 
-        //$command->execute($input,$output);
-        //$response->setData($json);
-	
+        //$user = $security->getUser();
+        //dump($user);
+
         //return $response;
-	    return $this->render('message/index.html.twig', [
+        return $this->render('message/index.html.twig', [
             'messages' => $messageRepository->findAll(),
             'recap' => $recap
         ]);
