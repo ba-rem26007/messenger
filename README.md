@@ -8,8 +8,13 @@
 ## API clask
 * https://api.slack.com/apps
 => 	Access Token : xoxp tocken
-exemple : xoxe.xoxp-1-XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+exemple : xoxe.xoxp-1-XXXXXXXXXXXXXXXXXXXXXXXXXXXX@test@chanel=test
+* Slack token needs to start with "xoxb-", "xoxp-" or "xoxa-2". 
+* See https://api.slack.com/authentication/token-types for further information.
 
+### autres idées
+* https://symfony.com/doc/current/notifier/chatters.html#adding-interactions-to-a-discord-message
+* https://smaine-milianni.medium.com/create-a-notifier-transport-in-symfony-968f34adcc09
 
 
 ### .env
