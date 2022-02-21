@@ -27,32 +27,32 @@ class Message
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Title;
+    private $title;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $Body;
+    private $body;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $EmissionDate;
+    private $emissionDate;
 
     /**
      * @ORM\Column(type="boolean", options={"default": 0})
      */
-    private $Status;
+    private $status;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $SendingDate;
+    private $sendingDate;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Choice;
+    private $choice;
 
     public function getId(): ?int
     {
@@ -61,73 +61,76 @@ class Message
 
     public function getTitle(): ?string
     {
-        return $this->Title;
+        return $this->title;
     }
 
-    public function setTitle(string $Title): self
+    public function setTitle(string $title): self
     {
-        $this->Title = $Title;
+        $this->title = $title;
 
         return $this;
     }
 
     public function getBody(): ?string
     {
-        return $this->Body;
+        return $this->body;
     }
 
-    public function setBody(string $Body): self
+    public function setBody(string $body): self
     {
-        $this->Body = $Body;
+        $this->body = $body;
 
         return $this;
     }
 
     public function getEmissionDate(): ?\DateTimeInterface
     {
-        return $this->EmissionDate;
+        return $this->emissionDate;
     }
 
-    public function setEmissionDate(?\DateTimeInterface $EmissionDate): self
+    public function setEmissionDate(?\DateTimeInterface $emissionDate): self
     {
-        $this->EmissionDate = $EmissionDate;
+        $this->emissionDate = $emissionDate;
 
         return $this;
     }
 
     public function getStatus(): ?bool
-    {   
-        return $this->Status;
+    {
+        return $this->status;
     }
 
-    public function setStatus(bool $Status): self
+    public function setStatus(bool $status): self
     {
-        $this->Status = $Status;
+        $this->status = $status;
 
         return $this;
     }
 
     public function getSendingDate(): ?\DateTimeInterface
     {
-        return $this->SendingDate;
+        return $this->sendingDate;
     }
 
-    public function setSendingDate(?\DateTimeInterface $SendingDate): self
+    public function setSendingDate(?\DateTimeInterface $sendingDate): self
     {
-        $this->SendingDate = $SendingDate;
+        $this->sendingDate = $sendingDate;
 
         return $this;
     }
 
     public function getChoice(): ?string
     {
-        return $this->Choice;
+        return $this->choice;
     }
 
-    public function setChoice(string $Choice): self
+    public function setChoice(string $choice): self
     {
-        $this->Choice = $Choice;
+        $this->choice = $choice;
 
         return $this;
     }
+
+
+
 }

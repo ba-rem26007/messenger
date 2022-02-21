@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use App\Service\CronService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -11,8 +12,23 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class SendMessageCommand extends Command
 {
-    protected static $defaultName = 'send-message';
-    protected static $defaultDescription = 'Add a short description for your command';
+    protected static $defaultName = 'message:send';
+    protected static $defaultDescription = 'lancer le cron des massages';
+    /**
+     * @var CronService
+     */
+    private $cronService;
+
+    /**
+     * @param string|null $name
+     * @param CronService $cronService
+     */
+    public function __construct(string $name = null,
+                                CronService $cronService)
+    {
+        parent::__construct($name);
+        $this->cronService = $cronService;
+    }
 
     protected function configure(): void
     {
@@ -25,18 +41,8 @@ class SendMessageCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $arg1 = $input->getArgument('arg1');
-
-        if ($arg1) {
-            $io->note(sprintf('You passed an argument: %s', $arg1));
-        }
-
-        if ($input->getOption('option1')) {
-            // ...
-        }
-
-        $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
-
+        $nb = $this->cronService->sendMessage();
+        $io->success('messages envoyés '.$nb);
         return Command::SUCCESS;
     }
 }

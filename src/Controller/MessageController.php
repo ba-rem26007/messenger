@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use DateTime;
+use App\Service\CronService;
 use App\Entity\Message;
 use App\Form\MessageType;
 use App\Repository\MessageRepository;
@@ -19,7 +19,7 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\Notifier\ChatterInterface;
 use Symfony\Component\Notifier\Message\ChatMessage;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Security;
+//use Symfony\Component\Security\Core\Security;
 //use Symfony\Component\Notifier\Bridge\Slack\SlackOptions;
 
 /**
@@ -108,7 +108,6 @@ class MessageController extends AbstractController
             $entityManager->remove($message);
             $entityManager->flush();
         }
-
         return $this->redirectToRoute('message_index', [], Response::HTTP_SEE_OTHER);
     }
     
@@ -116,79 +115,18 @@ class MessageController extends AbstractController
      * @Route("/cron/go", name="message_cron", methods={"GET", "POST"})
      */
     public function cron(
-		            MessageRepository $messageRepository,
-                    ManagerRegistry $doctrine, 
-				    ChatterInterface $chatter,
-				    MailerInterface $mailer
-                    //Security $security
-                ): 
+        CronService $cronService,
+                    MessageRepository $messageRepository
+                ):
 				Response
     {
-        $a = '';
-        $em = $doctrine->getManager();
-	
-        $messages = $em->getRepository(Message::class)->findBy(
-            ['Status' => 0],
-        );
 
-        $now = new DateTime();
-
-        $json = [];
-        $recap = "";
-        foreach ($messages as $message) {
-            if ($now >= $message->getEmissionDate()) {
-
-                $json[] = ['id' => $message->getId()];
-                $message->setSendingDate(new \DateTime('now'));
-		        // $this->addFlash('success', 'Message send '.$message->getChoice());
-
-                switch ($message->getChoice()) {
-                    case 'slack':
-                            //$options = (new SlackOptions());
-                            $messageSlack = (new ChatMessage($message->getTitle() .' - '. $message->getBody()  )  )
-                                            ->transport('slack');
-                            $recap .= "<li>Slack : ".$message->getTitle() .' - '. $message->getBody()."</li>";
-                            //Add the custom options to the chat message and send the message
-                            //$chatter->options($options);
-                            $sentMessage = $chatter->send($messageSlack);
-                            if($sentMessage!==FALSE){
-                                $message->setStatus(true);
-                            }
-                            break;
-                    case 'email':
-                            $email = (new Email())
-                                ->from('symfony5@ddev.site')
-                                ->to('no-reply@ddev.site')
-                                ->subject($message->getTitre())
-                                ->text($message->getBody())
-                                ->html($message->getBody());
-                            $mailer->send($email);
-                            $message->setStatus(true);
-
-                            $recap .= "<li>Mail : ".$message->getTitle() .' - '. $message->getBody()."</li>";
-                        break;
-                    default:
-                        break;
-                }
-
-                $em->persist($message);
-                $em->flush();
-            }
-        }
-
-        if($recap ==""){
-            $recap = "<h4>Pas de message à envoyer!</h4>";
-        }
-        else{
-            $recap = "<h3>Messages mis dans la file d'attente</h3><ul>".$recap."</ul>";
-        }
-
-        //$response = new JsonResponse();
-
-        //$user = $security->getUser();
-        //dump($user);
-
+        $nb = $cronService->sendMessage();
         //return $response;
+        $recap = "";
+        if($nb==1)$recap = $nb." message envoyé";
+        elseif($nb>1)$recap = $nb." messages envoyés";
+
         return $this->render('message/index.html.twig', [
             'messages' => $messageRepository->findAll(),
             'recap' => $recap

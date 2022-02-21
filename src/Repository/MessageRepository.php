@@ -19,6 +19,19 @@ class MessageRepository extends ServiceEntityRepository
         parent::__construct($registry, Message::class);
     }
 
+    public function findMessageToSend($date = NULL){
+        if($date==NULL)$date = new \DateTime('now');
+
+        $ret = $this->createQueryBuilder('m')
+            ->andWhere('m.status = :val')
+            ->andWhere('m.emissionDate <= :date')
+            ->orderBy('m.id', 'DESC')
+            ->setParameters(['val'=>0,'date'=>$date])
+            ->getQuery()
+            ->getResult();
+        return($ret);
+    }
+
     // /**
     //  * @return Message[] Returns an array of Message objects
     //  */

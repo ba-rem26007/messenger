@@ -17,6 +17,19 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
+        login:
+            pattern: ^/api_jwt/login
+            stateless: true
+            json_login:
+                check_path: /api_jwt/login_check
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+        api:
+            pattern: ^/api_jwt
+            stateless: true
+            jwt: ~
+
         main:
             lazy: true
             provider: app_user_provider
@@ -25,20 +38,22 @@ security:
                 path: app_logout
                 # where to redirect after logout
                 # target: app_any_route
-
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#the-firewall
-
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
+                # activate different ways to authenticate
+                # https://symfony.com/doc/current/security.html#the-firewall
+                # https://symfony.com/doc/current/security/impersonating_user.html
+                # switch_user: true
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/cron, roles: [PUBLIC_ACCESS, IS_AUTHENTICATED_FULLY, ROLE_ADMIN]    }
+        #for jwt
+        - { path: ^/api_jwt/login, roles: PUBLIC_ACCESS , methods: [POST]}
+        - { path: ^/api_jwt,       roles: IS_AUTHENTICATED_FULLY }
+        #for cronjob
+        - { path: ^/cron, roles: [PUBLIC_ACCESS]    }
+        #for app
         - { path: ^/message/cron/go, roles: [PUBLIC_ACCESS, IS_AUTHENTICATED_FULLY, ROLE_ADMIN]    }
         - { path: ^/message, roles: IS_AUTHENTICATED_FULLY    }
-        
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 
