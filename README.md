@@ -1,11 +1,11 @@
 # INSTALLATION
 
 ## Environnement
-* powershell
-* docker
-* 
+* powershell 7
+* docker (avec ddev)
+* phpstorm
 
-## API clask
+## creation d'un token slak pour l'API  
 * https://api.slack.com/apps
 => 	Access Token : xoxp tocken
 exemple : xoxe.xoxp-1-XXXXXXXXXXXXXXXXXXXXXXXXXXXX@test@chanel=test
@@ -45,15 +45,16 @@ un user existe deja : admin@fr.fr / pass : admin crée dans les migrations
 sinon pour créer un user :
 * ddev exec 'php bin/console user:create'
 
-
-
-### ddev status
+### ddev status pour voir les urls
 services
 * MailHog (https):        https://symfony5.ddev.site:8026
 * MailHog:                http://symfony5.ddev.site:8025
 * phpMyAdmin (https):     https://symfony5.ddev.site:8037
 * phpMyAdmin:             http://symfony5.ddev.site:8036
+et ddev ssh si vous voulez accéder à la machine.
 
+### rappel de la liste des routes 
+* php bin/console debug:router
 
 
 # DEBUG MESSENGER SYMFONY QUEUE
@@ -156,6 +157,21 @@ API: https://sylius.com/blog/api-for-a-modern-symfony-application/ (api platform
 ### DDEV : 
 * https://ddev.com/
 
+Autres idées :
+* commande créer un user admin en ligne de commande
+* make:twig-extension                        Creates a new Twig extension class
+// Droits précis (mon message)
+make:voter                                 Creates a new security voter class
+// Traductions
+make:voter                                 Creates a new security voter class
+ressources : 
+website : https://symfonycasts.com/
+
+
+
+###########################################################"
+
+
 
 # Installation 
 
@@ -163,7 +179,8 @@ API: https://sylius.com/blog/api-for-a-modern-symfony-application/ (api platform
 Il suffit de lancer le processus d'installation en tapant:
 
 * test avec make install et *DDEV en cours*
-* 
+
+equivalent à :
 * composer install
 * composer require encore // si un soucis avec le yarn build ci-dessous
 * bin/console doctrine:migrations:migrate
